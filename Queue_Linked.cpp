@@ -34,10 +34,24 @@ void Enqueue(int value)
 }
 int Dequeue()
 {
+  int x;
   node* trav; // create a traverse pointer and make it point to the second element of the Q  
-  trav = head; 
+  trav = head;
+  // if Q is empty... 
+  if(head == NULL)
+    {
+        cerr<<"Queue Underflow...."<<endl;
+        exit(1);
+    }
+  if(trav->next == NULL)
+  {
+      x = trav->value;
+      delete(trav);
+      head = NULL;
+      return x;
+  } 
   trav = trav->next; 
-  int x = head->value; // extract the value you wanna dequeue 
+  x = head->value; // extract the value you wanna dequeue 
   delete(head); // remove the first node, the node head is currently pointing to 
   trav->prev = NULL; // then make the second node the front of the Q 
   head = trav;
@@ -46,7 +60,12 @@ int Dequeue()
 void Print()
 {
     node* trav;
-    trav = head; 
+    trav = head;
+    if(trav == NULL)
+    {
+        cout<<"Queue is empty..."<<endl;
+        return;
+    } 
     while(trav!=NULL)
     {
         cout<<trav->value<<endl;
@@ -56,19 +75,29 @@ void Print()
 }
 int main()
 {
-    Enqueue(10);
-    Enqueue(20);
-    Enqueue(30);
-    Enqueue(40);
-    Enqueue(50); 
-    Print();
-    Dequeue();
-    cout<<"------------------------------------"<<endl; 
-    Print();
-    Dequeue();
-    cout<<"------------------------------------"<<endl; 
-    Print();
-    Enqueue(60);
-    cout<<"------------------------------------"<<endl; 
-    Print();
+    // TEST CASES ....
+    
+    // Enqueue(10);
+    // Enqueue(20);
+    // Enqueue(30);
+    // Enqueue(40);
+    // Enqueue(50); 
+    // Print();
+    // Dequeue();
+    // cout<<"------------------------------------"<<endl; 
+    // Print();
+    // int x = Dequeue();
+    // cout<< "x is : "<<x<<endl;
+    // cout<<"------------------------------------"<<endl; 
+    // Print();
+    // Enqueue(60);
+    // cout<<"------------------------------------"<<endl; 
+    // Print();
+    // Dequeue();
+    // Dequeue();
+    // Dequeue();
+    // int x = Dequeue();
+    // cout<<x<<endl;
+    // Print();
+
 }
