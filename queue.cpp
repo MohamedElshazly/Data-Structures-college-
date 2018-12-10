@@ -40,17 +40,17 @@ int Queue::dequeue()
     }
     else
     {
-    int x = array[front % cap] ; // same trick as the enqueue 
+    int x = array[front % cap] ; // same trick as the enqueue, since (any_num % 10) will always yield a number between 0-10, then that ensures that we'd always extract a value from the array with a correct index.  
     //update front and size 
-    front +=1; 
-    size -= 1;
+    front +=1; // we move the front to the next element in the line or the "Queue". 
+    size -= 1; // and normally, decrease the number of elements by 1.  
     return x;
     }
 }
 int Queue::print()
 {
-    int j = 0;
-    for(int i = front; i< (front+size); i++)
+    int j = 0; // the j here is just an indicator to whether or not we've entered the for loop. 
+    for(int i = front; i< (front+size); i++) // to understand the reason behind those bounries, draw a queue using a pen and paper, and try it out. 
     {
         cout<< array[i%cap] <<" -> ";
         j+=1;
@@ -75,6 +75,7 @@ int main()
         {
             int value;
             cout<<"Enter value: "<<endl; cin>> value;
+            // refer to the reference above to understand this syntax, but basically it runs, or "tries" the line of code inside the parentheses and if there's an error msg it "catches" it and displays it using cerr.
             try
                 {
                     q.enqueue(value);
