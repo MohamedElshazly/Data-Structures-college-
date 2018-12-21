@@ -15,6 +15,7 @@ node *head;
 node *tmp;
 int main()
 {
+	// THE MAIN FUNCTION IS VERY MESSY, I ENCOURGE YOU TO MAKE YOUR OWN TESTS ON YOUR MACHINE... 
 	int n1,n2,n3;
 	char answer;  
 	cout<< "Please Enter the initial number of element u want in the linked list: ";
@@ -37,20 +38,40 @@ int main()
 	}while(tolower(answer) == 'y');
 
 	cout<<"Do u want to delete anything? (Y/N)"<<endl;
-	Print();
-	cin>>answer; 
+	cin>>answer;
 	if(tolower(answer) == 'y')
 	{
 		cout<<"Enter node number...: ";
 		cin>>n3;
-	} 
-	Delete(n3);
-	cout<<"\n\nList after modifications...: "<<endl;
-	Print();
-	int c1,c2; 
-	cin>>c1>>c2;
-	Insert_nth(c1, c2);
-	Print();
+		Delete(n3);
+		cout<<"\n\nList after modifications...: "<<endl;
+		Print();
+		do{
+			cout<<"Do u want to delete anything else? (Y/N)"<<endl;
+			Print();
+			cin>>answer; 
+			if(tolower(answer) == 'y')
+			{
+				cout<<"Enter node number...: ";
+				cin>>n3;
+			
+				Delete(n3);
+				cout<<"\n\nList after modifications...: "<<endl;
+				Print();
+			}
+		}while(tolower(answer) == 'y');
+	}
+	cout<<"Do u wanna add after a particular node? : "<<endl;
+	cin>>answer;
+	if(tolower(answer) == 'y')
+	{
+		cout<<"Enter node number: "<<endl;
+		cin>>n3;
+		cout<<"Enter value: "<<endl;
+		cin>>n2;
+		Insert_nth(n3,n2);
+		Print();
+	}
 
 }
 
@@ -78,24 +99,30 @@ void Insert(int num)
 
 void Insert_nth(int n, int value)
 {
-	int i = 1;
 	node *new_node = new node;
 	new_node->data = value;
-	node *nxt = NULL; 
 	tmp = head;
-	while(tmp != NULL)
+	if(n != 0)
 	{
-		if(i == n)
+		int i = 1;
+		while(tmp != NULL)
 		{
-			nxt = tmp->next ;
-			tmp->next = new_node; 
-			new_node->next = nxt;
-			return;
+			if(i == n)
+			{
+				new_node->next = tmp->next;
+				tmp->next = new_node;
+				return;
+			}
+			tmp = tmp->next;
+			i++;
 		}
-		nxt = tmp; 
-		tmp = tmp->next;
-		i++;
-	}  
+	}
+	else
+	{
+		new_node->next = tmp; 
+		head = new_node;
+		return;
+	}	  
 
 }
 
@@ -114,29 +141,36 @@ void Print(void)
 	}
 	cout<<"EOF"<<endl;
 }
-
 void Delete(int n)
 {
 
 	int i = 1; 
-	node *pre = NULL;
 	tmp = head; 
 	while(tmp != NULL)
 	{
-		if(n == i)
+		if(n == 1)
 		{
 			if(tmp == head)
 			{
 				head = tmp->next;
+				free(tmp);
+				return;
+			}
+		}
+		else if(n-1 == i)
+		{
+			if(tmp->next != NULL)
+			{
+				tmp->next = tmp->next->next;
+				free(tmp->next);
+				return;
 			}
 			else
 			{
-				pre->next = tmp->next;
+				cout<<"node not found..."<<endl; 
+				exit(1);
 			}
-			free(tmp);
-			return;
-		}
-		pre = tmp; 
+		}		
 		tmp = tmp->next;
 		i++;
 
